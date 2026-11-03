@@ -1,0 +1,36 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+
+[[mods]]
+modId="epicfight_realistic_knockdown"
+version="1.0.0"
+displayName="Epic Fight: Realistic Knockdown"
+authors="libertyactions3-cloud; based on the work of XcS"
+description='''
+Allows Epic Fight weapon attacks to damage entities during the knockdown state.
+'''
+
+[[mixins]]
+config="epicfight_realistic_knockdown.mixins.json"
+
+[[dependencies.epicfight_realistic_knockdown]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.219,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.epicfight_realistic_knockdown]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.epicfight_realistic_knockdown]]
+modId="epicfight"
+type="required"
+versionRange="[21.17.3.1,)"
+ordering="NONE"
+side="BOTH"

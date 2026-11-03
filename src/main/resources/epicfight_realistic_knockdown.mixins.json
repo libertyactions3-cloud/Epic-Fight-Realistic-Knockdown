@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.libertyactions3.epicfightknockdown.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "EntityStateMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

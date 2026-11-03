@@ -25,10 +25,10 @@ This removes the knockdown-specific hit rejection for Epic Fight weapon attacks.
 
 Use a Java 21 JDK.
 
-Windows:
+Windows (PowerShell):
 
 ```powershell
-.`gradlew.bat clean build
+.\gradlew.bat clean build
 ```
 
 Linux/macOS:
