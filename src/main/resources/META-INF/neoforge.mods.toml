@@ -31,6 +31,6 @@ side="BOTH"
 [[dependencies.epicfight_realistic_knockdown]]
 modId="epicfight"
 type="required"
-versionRange="[21.17.3.1,)"
+versionRange="[21.17.3,)"
 ordering="NONE"
 side="BOTH"
