@@ -7,8 +7,9 @@ import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import yesman.epicfight.api.event.impl.VanillaEntityEventHooks;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.HurtableEntityPatch;
@@ -18,58 +19,39 @@ import yesman.epicfight.world.damagesource.StunType;
 
 @Mixin(value = VanillaEntityEventHooks.class, remap = false)
 public abstract class VanillaEntityEventHooksMixin {
-    @ModifyArg(
+    @ModifyArgs(
             method = "onCalculateDamagePre",
             at = @At(
                     value = "INVOKE",
                     target = "Lyesman/epicfight/world/capabilities/entitypatch/HurtableEntityPatch;applyStun(Lyesman/epicfight/world/damagesource/StunType;F)Z"
             ),
-            index = 0,
             remap = false
     )
-    private static StunType epicfightrealisticknockdown$chooseFollowupStunAnimation(
-            StunType originalStunType,
+    private static void epicfightrealisticknockdown$chooseFollowupStunReaction(
+            Args args,
             LivingEntity hitEntity,
             DamageSource damageSource,
             float amount,
             Consumer<Float> modifiedDamageApplier
     ) {
         if (!epicfightrealisticknockdown$wasAlreadyStunned(hitEntity)) {
-            return originalStunType;
+            return;
         }
 
         if (!damageSource.is(EpicFightDamageTypeTags.IS_MELEE)) {
-            return StunType.NEUTRALIZE;
+            args.set(0, StunType.NEUTRALIZE);
+            args.set(1, 2.0F);
+            return;
         }
 
-        return originalStunType == StunType.NONE ? StunType.SHORT : originalStunType;
-    }
+        StunType originalStunType = args.get(0);
+        float originalStunTime = args.get(1);
 
-    @ModifyArg(
-            method = "onCalculateDamagePre",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lyesman/epicfight/world/capabilities/entitypatch/HurtableEntityPatch;applyStun(Lyesman/epicfight/world/damagesource/StunType;F)Z"
-            ),
-            index = 1,
-            remap = false
-    )
-    private static float epicfightrealisticknockdown$ensureFollowupStunDuration(
-            float originalStunTime,
-            LivingEntity hitEntity,
-            DamageSource damageSource,
-            float amount,
-            Consumer<Float> modifiedDamageApplier
-    ) {
-        if (!epicfightrealisticknockdown$wasAlreadyStunned(hitEntity)) {
-            return originalStunTime;
+        if (originalStunType == StunType.NONE) {
+            args.set(0, StunType.SHORT);
         }
 
-        if (!damageSource.is(EpicFightDamageTypeTags.IS_MELEE)) {
-            return 2.0F;
-        }
-
-        return Math.max(originalStunTime, 0.25F);
+        args.set(1, Math.max(originalStunTime, 0.25F));
     }
 
     @Inject(method = "onCalculateDamagePre", at = @At("HEAD"), remap = false)
