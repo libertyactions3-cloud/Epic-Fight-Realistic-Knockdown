@@ -8,7 +8,7 @@ version="1.0.0"
 displayName="Epic Fight: Realistic Knockdown"
 authors="libertyactions3-cloud; based on the work of XcS"
 description='''
-Allows Epic Fight weapon attacks to damage entities during the knockdown state.
+Allows follow-up damage during Epic Fight hit-stun and knockdown, with melee and non-melee hit reactions.
 '''
 
 [[mixins]]
