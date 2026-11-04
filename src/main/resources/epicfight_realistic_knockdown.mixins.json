@@ -4,7 +4,8 @@
   "package": "com.libertyactions3.epicfightknockdown.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "EntityStateMixin"
+    "EntityStateMixin",
+    "VanillaEntityEventHooksMixin"
   ],
   "injectors": {
     "defaultRequire": 1
